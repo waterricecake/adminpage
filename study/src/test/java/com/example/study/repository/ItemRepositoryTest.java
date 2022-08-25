@@ -26,7 +26,7 @@ public class ItemRepositoryTest extends StudyApplicationTests {
         item.setRegisteredAt(LocalDateTime.now());
         item.setCreatedAt(LocalDateTime.now());
         item.setCreatedBy("Partner01");
-        item.setPartnerId(1l);
+        //item.setPartnerId(1l);
 
         item.setContent("삼성 노트북");
 

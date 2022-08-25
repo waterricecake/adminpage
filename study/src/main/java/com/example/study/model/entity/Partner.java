@@ -4,17 +4,23 @@ package com.example.study.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
+@ToString(exclude = {"itemList","category"})
+@EntityListeners(AuditingEntityListener.class)
 public class Partner {
 
     @Id
@@ -39,15 +45,23 @@ public class Partner {
 
     private LocalDateTime unregisteredAt;
 
+    @CreatedDate
     private LocalDateTime createdAt;
-
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    @CreatedBy
     private String createdBy;
-
+    @LastModifiedBy
     private String updatedBy;
 
-    private Long categoryId;
+    //private Long categoryId;
+    //partner N:1 category
+    @ManyToOne
+    private Category category;
+    //partner 1:N item
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
+    private List<Item> itemList;
 
 
 }
